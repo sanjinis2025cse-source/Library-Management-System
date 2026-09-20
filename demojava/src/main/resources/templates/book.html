@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Library Management System</title>
+
+    <link rel="stylesheet"
+          th:href="@{/style.css}">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            📚
+
+            <span>
+                Library
+            </span>
+
+        </div>
+
+
+        <nav>
+
+            <a href="/library"
+               class="nav-link active">
+
+                🏠
+
+                <span>
+                    Books
+                </span>
+
+            </a>
+
+
+            <a href="#"
+               class="nav-link">
+
+                👥
+
+                <span>
+                    Members
+                </span>
+
+            </a>
+
+
+            <a href="#"
+               class="nav-link">
+
+                📤
+
+                <span>
+                    Borrow Books
+                </span>
+
+            </a>
+
+
+            <a href="#"
+               class="nav-link">
+
+                📥
+
+                <span>
+                    Returns
+                </span>
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <div class="top-header">
+
+            <div>
+
+                <h1>
+                    Library Management System
+                </h1>
+
+                <p>
+                    Manage your books and authors
+                </p>
+
+            </div>
+
+
+            <div class="admin">
+
+                👤 Admin
+
+            </div>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <p>
+                        Total Books
+                    </p>
+
+                    <h2
+                            th:text="${#lists.size(books)}">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📖
+                </div>
+
+                <div>
+
+                    <p>
+                        Library Collection
+                    </p>
+
+                    <h2>
+                        Books
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ✍️
+                </div>
+
+                <div>
+
+                    <p>
+                        Authors
+                    </p>
+
+                    <h2>
+                        Authors
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOOKS -->
+
+        <div class="content-card">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Books
+                    </h2>
+
+                    <p>
+                        Manage all books in the library
+                    </p>
+
+                </div>
+
+
+                <a href="/library/new"
+                   class="btn">
+
+                    + Add New Book
+
+                </a>
+
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Book Title
+                        </th>
+
+                        <th>
+                            Author
+                        </th>
+
+                        <th>
+                            Country
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    <tr th:each="book : ${books}">
+
+
+                        <td th:text="${book.id}">
+                            1
+                        </td>
+
+
+                        <td>
+
+                            <strong
+                                    th:text="${book.title}">
+
+                                Java Programming
+
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    th:if="${book.author != null}"
+                                    th:text="${book.author.name}">
+
+                                James Gosling
+
+                            </span>
+
+
+                            <span
+                                    th:unless="${book.author != null}"
+                                    class="no-data">
+
+                                No Author
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    th:if="${book.author != null}"
+                                    th:text="${book.author.country}">
+
+                                USA
+
+                            </span>
+
+
+                            <span
+                                    th:unless="${book.author != null}">
+
+                                -
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            ₹<span
+                                th:text="${book.price}">
+
+                                799
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+
+                            <a
+                                    class="action edit"
+                                    th:href="@{/library/edit/{id}(id=${book.id})}">
+
+                                Edit
+
+                            </a>
+
+
+                            <a
+                                    class="action delete"
+                                    th:href="@{/library/delete/{id}(id=${book.id})}"
+                                    onclick="return confirm('Are you sure you want to delete this book?')">
+
+                                Delete
+
+                            </a>
+
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- NO BOOKS -->
+
+            <div
+                    class="empty-message"
+                    th:if="${#lists.isEmpty(books)}">
+
+                📚
+
+                <h3>
+                    No Books Available
+                </h3>
+
+                <p>
+                    Start by adding your first book.
+                </p>
+
+                <br>
+
+                <a
+                        href="/library/new"
+                        class="btn">
+
+                    + Add Book
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

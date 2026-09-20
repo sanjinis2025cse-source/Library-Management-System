@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Error</title>
+
+    <link rel="stylesheet"
+          th:href="@{/style.css}">
+
+</head>
+
+<body>
+
+<div class="form-page">
+
+    <div class="form-card error-card">
+
+        <div class="form-icon">
+            ⚠️
+        </div>
+
+        <h1>
+            Something went wrong
+        </h1>
+
+        <p
+                th:text="${message}">
+            The requested operation could not be completed.
+        </p>
+
+        <br>
+
+        <a
+                href="/books"
+                class="btn">
+
+            ← Back to Books
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
